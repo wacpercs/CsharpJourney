@@ -7,7 +7,7 @@ class Program
     int baseNumber, exponent;
     long powerResult, resultNumber, originalNumber;
     string numberAsString, withoutSecondDigit, rearrangedString;
-        char secondDigit;
+    char secondDigit;
     Console.Write("Enter base number a: ");
     baseNumber = int.Parse(Console.ReadLine());
 
