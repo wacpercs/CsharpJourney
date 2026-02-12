@@ -1,9 +1,7 @@
 ﻿using System;
 
-class Program
-{
-  static void Main()
-  {
+class Program {
+  static void Main() {
     int baseNumber, exponent;
     long powerResult, resultNumber, originalNumber;
     string numberAsString, withoutSecondDigit, rearrangedString;
