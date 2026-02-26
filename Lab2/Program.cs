@@ -1,299 +1,252 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-abstract class Animal
-{
-    public string nickname { get; set; }
-    public int age { get; set; }
-    public string habitat { get; set; }
-    public string dietType { get; set; }
+abstract class Animal {
+  public string nickname { get; set; }
+  public int age { get; set; }
+  public string habitat { get; set; }
+  public string dietType { get; set; }
 
-    public Animal(string nickname, int age, string habitat, string dietType)
-    {
-        this.nickname = nickname;
-        this.age = age;
-        this.habitat = habitat;
-        this.dietType = dietType;
-    }
+  public Animal(string nickname, int age, string habitat, string dietType) {
+    this.nickname = nickname;
+    this.age = age;
+    this.habitat = habitat;
+    this.dietType = dietType;
+  }
 
-    public virtual string GetInfo()
-    {
-        return $"Кличка: {nickname}, Возраст: {age}, Среда: {habitat}, Питание: {dietType}";
-    }
+  public virtual string GetInfo() {
+    return $"Nickname: {nickname}, Age: {age}, Habitat: {habitat}, Diet: {dietType}";
+  }
 }
 
-class Mammal : Animal
-{
-    public bool hasFur { get; set; }
+class Mammal : Animal {
+  public bool hasFur { get; set; }
 
-    public Mammal(string nickname, int age, string habitat, string dietType, bool hasFur)
-      : base(nickname, age, habitat, dietType)
-    {
-        this.hasFur = hasFur;
-    }
+  public Mammal(string nickname, int age, string habitat, string dietType, bool hasFur)
+    : base(nickname, age, habitat, dietType) {
+    this.hasFur = hasFur;
+  }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $", Тип: Млекопитающее, Шерсть: {(hasFur ? "есть" : "нет")}";
-    }
+  public override string GetInfo() {
+    return base.GetInfo() + $", Type: Mammal, Fur: {(hasFur ? "yes" : "no")}";
+  }
 }
 
-class Bird : Animal
-{
-    public double wingSpan { get; set; }
+class Bird : Animal {
+  public double wingSpan { get; set; }
 
-    public Bird(string nickname, int age, string habitat, string dietType, double wingSpan)
-      : base(nickname, age, habitat, dietType)
-    {
-        this.wingSpan = wingSpan;
-    }
+  public Bird(string nickname, int age, string habitat, string dietType, double wingSpan)
+    : base(nickname, age, habitat, dietType) {
+    this.wingSpan = wingSpan;
+  }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $", Тип: Птица, Размах крыльев: {wingSpan} м";
-    }
+  public override string GetInfo() {
+    return base.GetInfo() + $", Type: Bird, Wing span: {wingSpan} m";
+  }
 }
 
-class Fish : Animal
-{
-    public string waterType { get; set; }
+class Fish : Animal {
+  public string waterType { get; set; }
 
-    public Fish(string nickname, int age, string habitat, string dietType, string waterType)
-      : base(nickname, age, habitat, dietType)
-    {
-        this.waterType = waterType;
-    }
+  public Fish(string nickname, int age, string habitat, string dietType, string waterType)
+    : base(nickname, age, habitat, dietType) {
+    this.waterType = waterType;
+  }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $", Тип: Рыба, Тип воды: {waterType}";
-    }
+  public override string GetInfo() {
+    return base.GetInfo() + $", Type: Fish, Water type: {waterType}";
+  }
 }
 
-class Reptile : Animal
-{
-    public bool isVenomous { get; set; }
+class Reptile : Animal {
+  public bool isVenomous { get; set; }
 
-    public Reptile(string nickname, int age, string habitat, string dietType, bool isVenomous)
-      : base(nickname, age, habitat, dietType)
-    {
-        this.isVenomous = isVenomous;
-    }
+  public Reptile(string nickname, int age, string habitat, string dietType, bool isVenomous)
+    : base(nickname, age, habitat, dietType) {
+    this.isVenomous = isVenomous;
+  }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $", Тип: Пресмыкающееся, Ядовитость: {(isVenomous ? "да" : "нет")}";
-    }
+  public override string GetInfo() {
+    return base.GetInfo() + $", Type: Reptile, Venomous: {(isVenomous ? "yes" : "no")}";
+  }
 }
 
-class Amphibian : Animal
-{
-    public string skinMoisture { get; set; }
+class Amphibian : Animal {
+  public string skinMoisture { get; set; }
 
-    public Amphibian(string nickname, int age, string habitat, string dietType, string skinMoisture)
-      : base(nickname, age, habitat, dietType)
-    {
-        this.skinMoisture = skinMoisture;
-    }
+  public Amphibian(string nickname, int age, string habitat, string dietType, string skinMoisture)
+    : base(nickname, age, habitat, dietType) {
+    this.skinMoisture = skinMoisture;
+  }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $", Тип: Земноводное, Влажность кожи: {skinMoisture}";
-    }
+  public override string GetInfo() {
+    return base.GetInfo() + $", Type: Amphibian, Skin moisture: {skinMoisture}";
+  }
 }
 
-class AnimalManager
-{
-    private static AnimalManager instance;
-    private List<Animal> animals;
+class AnimalManager {
+  private static AnimalManager instance;
+  private List<Animal> animals;
 
-    private AnimalManager()
-    {
-        animals = new List<Animal>();
+  private AnimalManager() {
+    animals = new List<Animal>();
+  }
+
+  public static AnimalManager Instance {
+    get {
+      if (instance == null) {
+        instance = new AnimalManager();
+      }
+      return instance;
+    }
+  }
+
+  public void AddAnimal(Animal animal) {
+    animals.Add(animal);
+    Console.WriteLine($"Animal '{animal.nickname}' successfully added!");
+  }
+
+  public void ShowAllAnimals() {
+    if (animals.Count == 0) {
+      Console.WriteLine("Animal list is empty.");
+      return;
     }
 
-    public static AnimalManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new AnimalManager();
-            }
-            return instance;
-        }
+    Console.WriteLine($"\n=== Total animals: {animals.Count} ===");
+    for (int i = 0; i < animals.Count; ++i) {
+      Console.WriteLine($"{i + 1}. {animals[i].GetInfo()}");
+    }
+  }
+
+  public void ShowAnimalByIndex(int index) {
+    if (index < 0 || index >= animals.Count) {
+      Console.WriteLine("Invalid index.");
+      return;
+    }
+    Console.WriteLine(animals[index].GetInfo());
+  }
+
+  public void ShowMenu() {
+    while (true) {
+      Console.WriteLine("\n=== Animal Management Menu ===");
+      Console.WriteLine("1. Show all animals");
+      Console.WriteLine("2. Add animal");
+      Console.WriteLine("3. Show animal by index");
+      Console.WriteLine("4. Exit");
+      Console.Write("Select action: ");
+
+      if (!int.TryParse(Console.ReadLine(), out int choice)) {
+        Console.WriteLine("Error: enter a number.");
+        continue;
+      }
+
+      switch (choice) {
+        case 1:
+          ShowAllAnimals();
+          break;
+        case 2:
+          AddAnimalMenu();
+          break;
+        case 3:
+          ShowAnimalByIndexMenu();
+          break;
+        case 4:
+          Console.WriteLine("Exiting program.");
+          return;
+        default:
+          Console.WriteLine("Invalid choice.");
+          break;
+      }
+    }
+  }
+
+  private void AddAnimalMenu() {
+    Console.WriteLine("\n=== Adding animal ===");
+    Console.WriteLine("1. Mammal");
+    Console.WriteLine("2. Bird");
+    Console.WriteLine("3. Fish");
+    Console.WriteLine("4. Reptile");
+    Console.WriteLine("5. Amphibian");
+    Console.Write("Select animal type: ");
+
+    if (!int.TryParse(Console.ReadLine(), out int animalType) || animalType < 1 || animalType > 5) {
+      Console.WriteLine("Invalid animal type.");
+      return;
     }
 
-    public void AddAnimal(Animal animal)
-    {
-        animals.Add(animal);
-        Console.WriteLine($"Животное '{animal.nickname}' успешно добавлено!");
+    Console.Write("Enter nickname: ");
+    string nickname = Console.ReadLine();
+
+    Console.Write("Enter age: ");
+    if (!int.TryParse(Console.ReadLine(), out int age)) {
+      Console.WriteLine("Invalid age.");
+      return;
     }
 
-    public void ShowAllAnimals()
-    {
-        if (animals.Count == 0)
-        {
-            Console.WriteLine("Список животных пуст.");
-            return;
-        }
+    Console.Write("Enter habitat: ");
+    string habitat = Console.ReadLine();
 
-        Console.WriteLine($"\n=== Всего животных: {animals.Count} ===");
-        for (int i = 0; i < animals.Count; ++i)
-        {
-            Console.WriteLine($"{i + 1}. {animals[i].GetInfo()}");
+    Console.Write("Enter diet type: ");
+    string dietType = Console.ReadLine();
+
+    Animal newAnimal = null;
+
+    switch (animalType) {
+      case 1:
+        Console.Write("Has fur? (yes/no): ");
+        bool hasFur = Console.ReadLine()?.ToLower() == "yes";
+        newAnimal = new Mammal(nickname, age, habitat, dietType, hasFur);
+        break;
+      case 2:
+        Console.Write("Enter wing span (m): ");
+        if (double.TryParse(Console.ReadLine(), out double wingSpan)) {
+          newAnimal = new Bird(nickname, age, habitat, dietType, wingSpan);
         }
+        break;
+      case 3:
+        Console.Write("Enter water type (fresh/salt): ");
+        string waterType = Console.ReadLine();
+        newAnimal = new Fish(nickname, age, habitat, dietType, waterType);
+        break;
+      case 4:
+        Console.Write("Venomous? (yes/no): ");
+        bool isVenomous = Console.ReadLine()?.ToLower() == "yes";
+        newAnimal = new Reptile(nickname, age, habitat, dietType, isVenomous);
+        break;
+      case 5:
+        Console.Write("Enter skin moisture: ");
+        string skinMoisture = Console.ReadLine();
+        newAnimal = new Amphibian(nickname, age, habitat, dietType, skinMoisture);
+        break;
     }
 
-    public void ShowAnimalByIndex(int index)
-    {
-        if (index < 0 || index >= animals.Count)
-        {
-            Console.WriteLine("Некорректный индекс.");
-            return;
-        }
-        Console.WriteLine(animals[index].GetInfo());
+    if (newAnimal != null) {
+      AddAnimal(newAnimal);
+    } else {
+      Console.WriteLine("Error creating animal.");
     }
+  }
 
-    public void ShowMenu()
-    {
-        while (true)
-        {
-            Console.WriteLine("\n=== Меню управления животными ===");
-            Console.WriteLine("1. Показать всех животных");
-            Console.WriteLine("2. Добавить животное");
-            Console.WriteLine("3. Показать животное по индексу");
-            Console.WriteLine("4. Выход");
-            Console.Write("Выберите действие: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int choice))
-            {
-                Console.WriteLine("Ошибка: введите число.");
-                continue;
-            }
-
-            switch (choice)
-            {
-                case 1:
-                    ShowAllAnimals();
-                    break;
-                case 2:
-                    AddAnimalMenu();
-                    break;
-                case 3:
-                    ShowAnimalByIndexMenu();
-                    break;
-                case 4:
-                    Console.WriteLine("Выход из программы.");
-                    return;
-                default:
-                    Console.WriteLine("Некорректный выбор.");
-                    break;
-            }
-        }
+  private void ShowAnimalByIndexMenu() {
+    Console.Write("Enter animal index (starting from 1): ");
+    if (int.TryParse(Console.ReadLine(), out int index)) {
+      ShowAnimalByIndex(index - 1);
+    } else {
+      Console.WriteLine("Invalid index.");
     }
-
-    private void AddAnimalMenu()
-    {
-        Console.WriteLine("\n=== Добавление животного ===");
-        Console.WriteLine("1. Млекопитающее");
-        Console.WriteLine("2. Птица");
-        Console.WriteLine("3. Рыба");
-        Console.WriteLine("4. Пресмыкающееся");
-        Console.WriteLine("5. Земноводное");
-        Console.Write("Выберите тип животного: ");
-
-        if (!int.TryParse(Console.ReadLine(), out int animalType) || animalType < 1 || animalType > 5)
-        {
-            Console.WriteLine("Некорректный тип животного.");
-            return;
-        }
-
-        Console.Write("Введите кличку: ");
-        string nickname = Console.ReadLine();
-
-        Console.Write("Введите возраст: ");
-        if (!int.TryParse(Console.ReadLine(), out int age))
-        {
-            Console.WriteLine("Некорректный возраст.");
-            return;
-        }
-
-        Console.Write("Введите среду обитания: ");
-        string habitat = Console.ReadLine();
-
-        Console.Write("Введите тип питания: ");
-        string dietType = Console.ReadLine();
-
-        Animal newAnimal = null;
-
-        switch (animalType)
-        {
-            case 1:
-                Console.Write("Есть ли шерсть? (да/нет): ");
-                bool hasFur = Console.ReadLine()?.ToLower() == "да";
-                newAnimal = new Mammal(nickname, age, habitat, dietType, hasFur);
-                break;
-            case 2:
-                Console.Write("Введите размах крыльев (м): ");
-                if (double.TryParse(Console.ReadLine(), out double wingSpan))
-                {
-                    newAnimal = new Bird(nickname, age, habitat, dietType, wingSpan);
-                }
-                break;
-            case 3:
-                Console.Write("Введите тип воды (пресная/морская): ");
-                string waterType = Console.ReadLine();
-                newAnimal = new Fish(nickname, age, habitat, dietType, waterType);
-                break;
-            case 4:
-                Console.Write("Ядовитое? (да/нет): ");
-                bool isVenomous = Console.ReadLine()?.ToLower() == "да";
-                newAnimal = new Reptile(nickname, age, habitat, dietType, isVenomous);
-                break;
-            case 5:
-                Console.Write("Введите влажность кожи: ");
-                string skinMoisture = Console.ReadLine();
-                newAnimal = new Amphibian(nickname, age, habitat, dietType, skinMoisture);
-                break;
-        }
-
-        if (newAnimal != null)
-        {
-            AddAnimal(newAnimal);
-        }
-        else
-        {
-            Console.WriteLine("Ошибка при создании животного.");
-        }
-    }
-
-    private void ShowAnimalByIndexMenu()
-    {
-        Console.Write("Введите индекс животного (начиная с 1): ");
-        if (int.TryParse(Console.ReadLine(), out int index))
-        {
-            ShowAnimalByIndex(index - 1);
-        }
-        else
-        {
-            Console.WriteLine("Некорректный индекс.");
-        }
-    }
+  }
 }
 
-class Program
-{
-    static void Main()
-    {
-        AnimalManager manager = AnimalManager.Instance;
+class Program {
+  static void Main() {
+    AnimalManager manager = AnimalManager.Instance;
 
-        manager.AddAnimal(new Mammal("Кот", 5, "лес", "хищник", true));
-        manager.AddAnimal(new Bird("Птичка", 3, "город", "всеядное", 0.5));
-        manager.AddAnimal(new Fish("Рыба", 2, "водоём", "всеядное", "морская"));
-        manager.AddAnimal(new Reptile("Змея", 7, "пустыня", "хищник", true));
-        manager.AddAnimal(new Amphibian("Жаба", 4, "болото", "хищник", "высокая"));
+    manager.AddAnimal(new Mammal("Barsik", 5, "forest", "carnivore", true));
+    manager.AddAnimal(new Bird("Kesha", 3, "city", "omnivore", 0.5));
+    manager.AddAnimal(new Fish("Nemo", 2, "water", "omnivore", "salt"));
+    manager.AddAnimal(new Reptile("Snake", 7, "desert", "carnivore", true));
+    manager.AddAnimal(new Amphibian("Toad", 4, "swamp", "carnivore", "high"));
 
-        manager.ShowMenu();
-    }
+    manager.ShowMenu();
+  }
 }
